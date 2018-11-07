@@ -10,5 +10,7 @@ provider:
 
 functions:
   test:
-    handler: handler.test
+    handler: dist/handler.test
+    events:
+      - http: GET test
 
