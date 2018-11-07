@@ -1,0 +1,14 @@
+service: studentdemo
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: eu-west-1
+  stage: dev
+  package:
+    individually: true
+
+functions:
+  test:
+    handler: handler.test
+
