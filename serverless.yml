@@ -13,8 +13,12 @@ plugins:
   - serverless-offline
 
 functions:
-  test:
+  get-test:
     handler: src/lambdas/http/get-test.handler
     events:
       - http: GET test
+  post-test:
+    handler: src/lambdas/http/post-test.handler
+    events:
+      - http: POST test
 

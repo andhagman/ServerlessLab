@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/andhagman/studentdemo#readme",
   "dependencies": {
+    "@types/joi": "^14.0.1",
+    "joi": "^14.3.0",
     "path": "^0.12.7",
     "serverless-offline": "^3.31.3",
     "ts-loader": "^5.3.1"

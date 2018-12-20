@@ -19,7 +19,7 @@ type LambdaFunction = (event, context) => Promise<ILambdaFunctionResponse>;
 
 
 export const lambdaHttpHandler = (func: LambdaFunction) => async (event: any, context: any, callback: LambdaCallback): Promise<LambdaCallback> => {
-    console.log(event);
+
     try {
         const { statusCode, response } = await func(event, context);
 
@@ -31,14 +31,12 @@ export const lambdaHttpHandler = (func: LambdaFunction) => async (event: any, co
             body: JSON.stringify(response)
         });
     } catch (err) {
-        console.error(err);
-
         return callback(null, {
             statusCode: err.statusCode,
             headers: {
                 'Access-Control-Allow-Origin': '*'
             },
-            body: err.toBody()
+            body: JSON.stringify(err.message)
         });
     }
 };
