@@ -8,9 +8,13 @@ provider:
   package:
     individually: true
 
+plugins:
+  - serverless-webpack
+  - serverless-offline
+
 functions:
   test:
-    handler: dist/handler.test
+    handler: src/lambdas/http/get-test.handler
     events:
       - http: GET test
 

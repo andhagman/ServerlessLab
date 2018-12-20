@@ -1,8 +1,8 @@
 {
-  "name": "studentdemo",
+  "name": "stubservice",
   "version": "1.0.0",
   "description": "A simple serverless demo application",
-  "main": "handler.js",
+  "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,8 +16,15 @@
     "url": "https://github.com/andhagman/studentdemo/issues"
   },
   "homepage": "https://github.com/andhagman/studentdemo#readme",
-  "dependencies": {},
+  "dependencies": {
+    "path": "^0.12.7",
+    "serverless-offline": "^3.31.3",
+    "ts-loader": "^5.3.1"
+  },
   "devDependencies": {
-    "typescript": "^3.1.6"
+    "serverless-webpack": "^5.2.0",
+    "typescript": "^3.1.6",
+    "webpack": "^4.28.0",
+    "webpack-cli": "^3.1.2"
   }
 }
