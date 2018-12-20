@@ -18,9 +18,9 @@ export interface ILambdaFunctionResponse {
 type LambdaFunction = (event, context) => Promise<ILambdaFunctionResponse>;
 
 
-export const lambdaHandler = (func: LambdaFunction) => async (event: any, context: any, callback: LambdaCallback): Promise<LambdaCallback> => {
+export const lambdaHttpHandler = (func: LambdaFunction) => async (event: any, context: any, callback: LambdaCallback): Promise<LambdaCallback> => {
+    console.log(event);
     try {
-
         const { statusCode, response } = await func(event, context);
 
         return callback(null, {

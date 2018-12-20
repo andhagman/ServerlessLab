@@ -1,9 +1,8 @@
-import { lambdaHandler } from '../../utils/lambdaUtils';
+import { lambdaHttpHandler } from '../../utils/lambdaUtils';
 import { ITest } from '../../models/Test';
 
-export const handler = lambdaHandler(async (event) => {
-
-  const test: ITest = { 
+export const handler = lambdaHttpHandler(async (event) => {
+  const test: ITest = {
     TestBool: true,
     TestNumber: 1,
     TestString: "string"
