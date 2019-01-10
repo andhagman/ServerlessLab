@@ -1,4 +1,4 @@
-service: studentdemo
+service: andreas-hagman-serverlesslab
 
 provider:
   name: aws
