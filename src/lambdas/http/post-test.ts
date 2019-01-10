@@ -1,7 +1,7 @@
 import { lambdaHttpHandler } from '../../utils/lambdaUtils';
 import { validateOrThrow } from '../../utils/validationUtils'
 import * as joi from 'joi';
-//  import { v4 } from 'uuid';
+import { v4 } from 'uuid';
 
 const schema: joi.SchemaLike = joi.object().keys({
     TestString: joi.string().required(),
@@ -10,8 +10,6 @@ const schema: joi.SchemaLike = joi.object().keys({
 });
 
 export const handler = lambdaHttpHandler(async (event) => {
-    // console.log(v4());
-
     const body = JSON.parse(event.body);
 
     validateOrThrow(body, schema);
@@ -19,6 +17,6 @@ export const handler = lambdaHttpHandler(async (event) => {
 
     return {
         statusCode: 201,
-        response: body
+        response: v4()
     }
 });

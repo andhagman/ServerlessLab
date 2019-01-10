@@ -9,10 +9,9 @@ export const handler = lambdaHttpHandler(async (event) => {
     TestString: "string"
   }
 
-  console.log(v4());
 
   return {
     statusCode: 200,
-    response: test
+    response: v4()
   }
 });
