@@ -17,8 +17,21 @@ functions:
     handler: src/lambdas/http/get-test.handler
     events:
       - http: GET test
+    layers:
+      - {Ref: CommonLibsLambdaLayer}
   post-test:
     handler: src/lambdas/http/post-test.handler
     events:
       - http: POST test
+    layers:
+      - {Ref: CommonLibsLambdaLayer}
 
+layers:
+  commonLibs:
+    path: layer
+    name: ${self:provider.stage}-commonLibs
+    description: Common libraries for lambda functions
+    compatibleRuntimes:
+      - nodejs8.10
+    allowedAccounts:
+      - '*'
