@@ -1,8 +1,0 @@
-{
-  "name": "layer",
-  "version": "1.0.0",
-  "description": "Shared layer for lambda functions",
-  "dependencies": {
-    "uuid": "^3.3.2"
-  }
-}

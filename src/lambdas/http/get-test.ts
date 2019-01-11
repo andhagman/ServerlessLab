@@ -1,6 +1,5 @@
 import { lambdaHttpHandler } from '../../utils/lambdaUtils';
 import { ITest } from '../../models/Test';
-import { v4 } from 'uuid';
 
 export const handler = lambdaHttpHandler(async (event) => {
   const test: ITest = {
@@ -12,6 +11,6 @@ export const handler = lambdaHttpHandler(async (event) => {
 
   return {
     statusCode: 200,
-    response: v4()
+    response: "Ok"
   }
 });

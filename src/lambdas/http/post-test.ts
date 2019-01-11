@@ -1,7 +1,6 @@
 import { lambdaHttpHandler } from '../../utils/lambdaUtils';
 import { validateOrThrow } from '../../utils/validationUtils'
 import * as joi from 'joi';
-import { v4 } from 'uuid';
 
 const schema: joi.SchemaLike = joi.object().keys({
     TestString: joi.string().required(),
@@ -17,6 +16,6 @@ export const handler = lambdaHttpHandler(async (event) => {
 
     return {
         statusCode: 201,
-        response: v4()
+        response: "Ok"
     }
 });

@@ -7,6 +7,9 @@ provider:
   stage: dev
   package:
     individually: true
+  environment:
+    UserPoolId: eu-west-1_CGt8I9kpc
+    UserPoolClientId: 5htesrdic790kiifr25sfraquq
 
 plugins:
   - serverless-webpack
@@ -16,22 +19,106 @@ functions:
   get-test:
     handler: src/lambdas/http/get-test.handler
     events:
-      - http: GET test
-    layers:
-      - {Ref: CommonLibsLambdaLayer}
+      - http:
+          method: GET
+          path: test
+          authorizer: 
+             type: COGNITO_USER_POOLS
+             authorizerId: 
+               Ref: ApiGatewayAuthorizer
   post-test:
     handler: src/lambdas/http/post-test.handler
     events:
-      - http: POST test
-    layers:
-      - {Ref: CommonLibsLambdaLayer}
+      - http:
+          method: POST
+          path: test
+          authorizer: 
+             type: COGNITO_USER_POOLS
+             authorizerId: 
+               Ref: ApiGatewayAuthorizer
+  register:
+    handler: src/lambdas/http/autherizer/register.handler
+    events:
+      - http:
+          method: POST
+          path: register
+  verify-user:
+    handler: src/lambdas/http/autherizer/verify-user.handler
+    events:
+      - http:
+          method: POST
+          path: verify
+resources:
+  Resources:
+    ApiGatewayAuthorizer: 
+      Type: AWS::ApiGateway::Authorizer
+      Properties: 
+        Name: CognitoUserPool
+        Type: COGNITO_USER_POOLS
+        IdentitySource: method.request.header.Authorization
+        RestApiId: 
+          Ref: ApiGatewayRestApi
+        ProviderARNs: 
+          - Fn::GetAtt:
+              - UserPool
+              - Arn
 
-layers:
-  commonLibs:
-    path: layer
-    name: ${self:provider.stage}-commonLibs
-    description: Common libraries for lambda functions
-    compatibleRuntimes:
-      - nodejs8.10
-    allowedAccounts:
-      - '*'
+    UserPool:
+      Type: AWS::Cognito::UserPool
+      Properties:
+        UserPoolName: ApiGateWayUserPool
+        SmsVerificationMessage: "Your verification code is {####}."
+        AutoVerifiedAttributes:
+          - email
+        MfaConfiguration: "OFF"
+        EmailVerificationSubject: "Your Serverless Lab verification code"
+        EmailVerificationMessage: "Your Serverless Lab  verification code is {####}."
+        SmsAuthenticationMessage: "Your Serverless Lab  authentication code is {####}."
+        Schema:
+          - Name: name
+            AttributeDataType: String
+            Mutable: true
+            Required: false
+          - Name: email
+            AttributeDataType: String
+            Mutable: false
+            Required: true
+          - Name: phone_number
+            AttributeDataType: String
+            Mutable: true
+            Required: false
+        Policies:
+          PasswordPolicy:
+            RequireLowercase: true
+            RequireSymbols: false
+            RequireNumbers: true
+            MinimumLength: 8
+            RequireUppercase: true
+        AdminCreateUserConfig:
+          InviteMessageTemplate:
+            EmailMessage: "Your Serverless Lab  username is {username} and temporary password is {####}."
+            EmailSubject: "Your temporary Serverless Lab  password"
+            SMSMessage: "Your Serverless Lab  username is {username} and temporary password is {####}."
+          UnusedAccountValidityDays: 7
+          AllowAdminCreateUserOnly: false
+
+    UserPoolClient:
+      Type: AWS::Cognito::UserPoolClient
+      Properties:
+        ClientName: ApiGateWayUserPoolClient
+        UserPoolId:
+          Ref: UserPool
+        ExplicitAuthFlows:
+          - USER_PASSWORD_AUTH
+        GenerateSecret: false
+
+Outputs:
+  UserPoolId:
+    Value:
+      Ref: UserPool
+
+  UserPoolClientId:
+    Value:
+      Ref: UserPoolClient
+
+

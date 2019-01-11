@@ -17,8 +17,14 @@
   },
   "homepage": "https://github.com/andhagman/studentdemo#readme",
   "dependencies": {
+    "@types/aws-sdk": "^2.7.0",
     "@types/joi": "^14.0.1",
+    "@types/node": "^10.12.18",
+    "amazon-cognito-identity-js": "^3.0.7",
+    "aws-amplify": "^1.1.19",
+    "aws-sdk": "^2.386.0",
     "joi": "^14.3.0",
+    "node-fetch": "^2.3.0",
     "path": "^0.12.7",
     "serverless-offline": "^3.31.3",
     "ts-loader": "^5.3.1"

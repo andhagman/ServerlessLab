@@ -14,6 +14,7 @@ module.exports = {
     path: path.join(__dirname, 'dist'),
     filename: '[name].js',
   },
+  externals: ['aws-sdk'],
   target: 'node',
   module: {
     rules: [{ test: /\.ts(x?)$/, include: path.resolve(__dirname, 'src'), loader: 'ts-loader' }],
