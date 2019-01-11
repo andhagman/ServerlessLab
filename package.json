@@ -1,5 +1,5 @@
 {
-  "name": "stubservice",
+  "name": "serverlesslab",
   "version": "1.0.0",
   "description": "A simple serverless demo application",
   "private": true,
