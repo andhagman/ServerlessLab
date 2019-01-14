@@ -5,7 +5,7 @@ import { validateOrThrow } from '../../../utils/validationUtils'
 import { CognitoIdentity, CognitoIdentityServiceProvider } from 'aws-sdk';
 
 const schema: joi.SchemaLike = joi.object().keys({
-    username: joi.string().required(),
+    email: joi.string().required(),
     password: joi.string().required(),
 });
 
@@ -15,9 +15,9 @@ export const handler = lambdaHttpHandler(async (event) => {
     const body = JSON.parse(event.body);
     validateOrThrow(body, schema);
 
-    const { username, password } = body;
+    const { email, password } = body;
 
-    const authResult = await authenticate(username, password);
+    const authResult = await authenticate(email, password);
 
     return {
         statusCode: 200,
@@ -25,12 +25,12 @@ export const handler = lambdaHttpHandler(async (event) => {
     }
 });
 
-const authenticate = async (username: string, password: string): Promise<AWS.CognitoIdentityServiceProvider.AdminInitiateAuthResponse> => {
+const authenticate = async (email: string, password: string): Promise<AWS.CognitoIdentityServiceProvider.AdminInitiateAuthResponse> => {
     const initiateParams: AWS.CognitoIdentityServiceProvider.AdminInitiateAuthRequest =
     {
         AuthFlow: 'ADMIN_NO_SRP_AUTH',
         AuthParameters: {
-            USERNAME: username,
+            USERNAME: email,
             PASSWORD: password,
         },
         UserPoolId: process.env.UserPoolId,

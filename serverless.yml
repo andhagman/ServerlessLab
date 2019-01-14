@@ -8,8 +8,8 @@ provider:
   package:
     individually: true
   environment:
-    UserPoolId: eu-west-1_sQoFogzSY
-    UserPoolClientId: 5lmjf35hiiidugq4gfbefq3ei0
+    UserPoolId: eu-west-1_Cb7f1Pz3K
+    UserPoolClientId: 10sfper876k1siihn58apcmbcj
   iamRoleStatements:
     - Effect: Allow
       Action: 
@@ -78,13 +78,12 @@ resources:
       Type: AWS::Cognito::UserPool
       Properties:
         UserPoolName: ApiGateWayUserPool
-        SmsVerificationMessage: "Your verification code is {####}."
+        UsernameAttributes: [ email ]
         AutoVerifiedAttributes:
           - email
         MfaConfiguration: "OFF"
         EmailVerificationSubject: "Your Serverless Lab verification code"
         EmailVerificationMessage: "Your Serverless Lab  verification code is {####}."
-        SmsAuthenticationMessage: "Your Serverless Lab  authentication code is {####}."
         Schema:
           - Name: name
             AttributeDataType: String
@@ -94,10 +93,6 @@ resources:
             AttributeDataType: String
             Mutable: false
             Required: true
-          - Name: phone_number
-            AttributeDataType: String
-            Mutable: true
-            Required: false
         Policies:
           PasswordPolicy:
             RequireLowercase: true
@@ -109,7 +104,6 @@ resources:
           InviteMessageTemplate:
             EmailMessage: "Your Serverless Lab  username is {username} and temporary password is {####}."
             EmailSubject: "Your temporary Serverless Lab  password"
-            SMSMessage: "Your Serverless Lab  username is {username} and temporary password is {####}."
           UnusedAccountValidityDays: 7
           AllowAdminCreateUserOnly: false
 

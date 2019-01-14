@@ -4,9 +4,8 @@ import * as joi from 'joi';
 import { validateOrThrow } from '../../../utils/validationUtils'
 
 const schema: joi.SchemaLike = joi.object().keys({
-    username: joi.string().required(),
-    password: joi.string().required(),
     email: joi.string().required(),
+    password: joi.string().required(),
 });
 
 const cognitoProvider = new AWS.CognitoIdentityServiceProvider();
@@ -15,12 +14,12 @@ export const handler = lambdaHttpHandler(async (event) => {
     const body = JSON.parse(event.body);
     validateOrThrow(body, schema);
 
-    const { username, password, email } = body;
+    const { email, password } = body;
 
     const params: AWS.CognitoIdentityServiceProvider.SignUpRequest = {
         ClientId: process.env.UserPoolClientId,
         Password: password,
-        Username: username,
+        Username: email,
         UserAttributes: [
             {
                 Name: 'email',
