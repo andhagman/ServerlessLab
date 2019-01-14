@@ -8,8 +8,13 @@ provider:
   package:
     individually: true
   environment:
-    UserPoolId: eu-west-1_CGt8I9kpc
-    UserPoolClientId: 5htesrdic790kiifr25sfraquq
+    UserPoolId: eu-west-1_sQoFogzSY
+    UserPoolClientId: 5lmjf35hiiidugq4gfbefq3ei0
+  iamRoleStatements:
+    - Effect: Allow
+      Action: 
+        - cognito-idp:*
+      Resource: "*"
 
 plugins:
   - serverless-webpack
@@ -42,12 +47,18 @@ functions:
       - http:
           method: POST
           path: register
-  verify-user:
-    handler: src/lambdas/http/autherizer/verify-user.handler
+  confirm:
+    handler: src/lambdas/http/autherizer/confirm.handler
     events:
       - http:
           method: POST
-          path: verify
+          path: confirm
+  auth:
+    handler: src/lambdas/http/autherizer/auth.handler
+    events:
+      - http:
+          method: POST
+          path: auth
 resources:
   Resources:
     ApiGatewayAuthorizer: 
@@ -109,8 +120,9 @@ resources:
         UserPoolId:
           Ref: UserPool
         ExplicitAuthFlows:
-          - USER_PASSWORD_AUTH
+          - ADMIN_NO_SRP_AUTH
         GenerateSecret: false
+        RefreshTokenValidity: 7
 
 Outputs:
   UserPoolId:

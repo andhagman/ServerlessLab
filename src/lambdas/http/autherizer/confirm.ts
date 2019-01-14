@@ -22,10 +22,12 @@ export const handler = lambdaHttpHandler(async (event) => {
         Username: username
     };
 
-    const res = await cognitoProvider.confirmSignUp(params).promise()
+   await cognitoProvider.confirmSignUp(params).promise()
 
     return {
         statusCode: 200,
-        response: res
+        response: {
+            message: 'User confirmed successfully'
+        }
     }
 });
