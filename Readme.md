@@ -1,2 +1,2 @@
-A simple example serverless application with API GW Cognito Authtentification.
+A simple example serverless application with API GW Cognito Authentication.
 
