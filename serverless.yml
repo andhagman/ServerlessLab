@@ -8,8 +8,8 @@ provider:
   package:
     individually: true
   environment:
-    UserPoolId: eu-west-1_Cb7f1Pz3K
-    UserPoolClientId: 10sfper876k1siihn58apcmbcj
+    UserPoolId: eu-west-1_AYJjwLPdM
+    UserPoolClientId: 4jnoc9p1nk7e6uofi7r8u6878q
   iamRoleStatements:
     - Effect: Allow
       Action: 
@@ -59,25 +59,31 @@ functions:
       - http:
           method: POST
           path: auth
+  pre-signup:
+    handler: src/lambdas/events/cognito/pre-signup.handler
+    events:
+      - cognitoUserPool:
+          pool: ServerlessLab
+          trigger: PreSignUp
 resources:
   Resources:
     ApiGatewayAuthorizer: 
       Type: AWS::ApiGateway::Authorizer
       Properties: 
-        Name: CognitoUserPool
+        Name: ApiGatewayAuthorizer
         Type: COGNITO_USER_POOLS
         IdentitySource: method.request.header.Authorization
         RestApiId: 
           Ref: ApiGatewayRestApi
         ProviderARNs: 
           - Fn::GetAtt:
-              - UserPool
+              - CognitoUserPoolServerlessLab
               - Arn
 
-    UserPool:
+    CognitoUserPoolServerlessLab:
       Type: AWS::Cognito::UserPool
       Properties:
-        UserPoolName: ApiGateWayUserPool
+        UserPoolName: UserPool
         UsernameAttributes: [ email ]
         AutoVerifiedAttributes:
           - email
@@ -110,9 +116,9 @@ resources:
     UserPoolClient:
       Type: AWS::Cognito::UserPoolClient
       Properties:
-        ClientName: ApiGateWayUserPoolClient
+        ClientName: UserPoolClient
         UserPoolId:
-          Ref: UserPool
+          Ref: CognitoUserPoolServerlessLab
         ExplicitAuthFlows:
           - ADMIN_NO_SRP_AUTH
         GenerateSecret: false
@@ -121,7 +127,7 @@ resources:
 Outputs:
   UserPoolId:
     Value:
-      Ref: UserPool
+      Ref: CognitoUserPoolServerlessLab
 
   UserPoolClientId:
     Value:
