@@ -1,7 +1,7 @@
-import { lambdaHttpHandler } from '../../../utils/lambdaUtils';
+import { lambdaHttpHandler, validateOrThrow } from '../../../utils';
 import * as AWS from 'aws-sdk';
 import * as joi from 'joi';
-import { validateOrThrow } from '../../../utils/validationUtils'
+
 
 const schema: joi.SchemaLike = joi.object().keys({
     username: joi.string().required(),

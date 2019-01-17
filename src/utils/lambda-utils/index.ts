@@ -1,0 +1,1 @@
+export { lambdaHttpHandler } from './LambdaHttp'

@@ -1,4 +1,4 @@
-import { lambdaHttpHandler } from '../../utils/lambdaUtils';
+import { lambdaHttpHandler } from '../../utils/lambda-utils/LambdaHttp';
 import { ITest } from '../../models/Test';
 
 export const handler = lambdaHttpHandler(async (event) => {

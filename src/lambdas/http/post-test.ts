@@ -1,5 +1,5 @@
-import { lambdaHttpHandler } from '../../utils/lambdaUtils';
-import { validateOrThrow } from '../../utils/validationUtils'
+import { lambdaHttpHandler, validateOrThrow } from '../../utils';
+
 import * as joi from 'joi';
 
 const schema: joi.SchemaLike = joi.object().keys({
@@ -12,7 +12,6 @@ export const handler = lambdaHttpHandler(async (event) => {
     const body = JSON.parse(event.body);
 
     validateOrThrow(body, schema);
-
 
     return {
         statusCode: 201,

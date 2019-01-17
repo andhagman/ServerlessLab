@@ -8,8 +8,8 @@ provider:
   package:
     individually: true
   environment:
-    UserPoolId: eu-west-1_AYJjwLPdM
-    UserPoolClientId: 4jnoc9p1nk7e6uofi7r8u6878q
+    UserPoolId: eu-west-1_hkR3jTqeE
+    UserPoolClientId: 52k13bc0ini6ksl79n0qpeabb0
   iamRoleStatements:
     - Effect: Allow
       Action: 
@@ -27,20 +27,20 @@ functions:
       - http:
           method: GET
           path: test
-          authorizer: 
-             type: COGNITO_USER_POOLS
-             authorizerId: 
-               Ref: ApiGatewayAuthorizer
+          # authorizer: 
+          #    type: COGNITO_USER_POOLS
+          #    authorizerId: 
+          #      Ref: ApiGatewayAuthorizer
   post-test:
     handler: src/lambdas/http/post-test.handler
     events:
       - http:
           method: POST
           path: test
-          authorizer: 
-             type: COGNITO_USER_POOLS
-             authorizerId: 
-               Ref: ApiGatewayAuthorizer
+          # authorizer: 
+          #    type: COGNITO_USER_POOLS
+          #    authorizerId: 
+          #      Ref: ApiGatewayAuthorizer
   register:
     handler: src/lambdas/http/autherizer/register.handler
     events:
@@ -84,17 +84,13 @@ resources:
       Type: AWS::Cognito::UserPool
       Properties:
         UserPoolName: UserPool
-        UsernameAttributes: [ email ]
-        AutoVerifiedAttributes:
-          - email
+        # UsernameAttributes: [ email ]
+        # AutoVerifiedAttributes:
+        #   - email
         MfaConfiguration: "OFF"
-        EmailVerificationSubject: "Your Serverless Lab verification code"
-        EmailVerificationMessage: "Your Serverless Lab  verification code is {####}."
+        # EmailVerificationSubject: "Your Serverless Lab verification code"
+        # EmailVerificationMessage: "Your Serverless Lab  verification code is {####}."
         Schema:
-          - Name: name
-            AttributeDataType: String
-            Mutable: true
-            Required: false
           - Name: email
             AttributeDataType: String
             Mutable: false

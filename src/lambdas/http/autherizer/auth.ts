@@ -1,8 +1,6 @@
-import { lambdaHttpHandler } from '../../../utils/lambdaUtils';
+import { lambdaHttpHandler, validateOrThrow } from '../../../utils';
 import * as AWS from 'aws-sdk';
 import * as joi from 'joi';
-import { validateOrThrow } from '../../../utils/validationUtils'
-import { CognitoIdentity, CognitoIdentityServiceProvider } from 'aws-sdk';
 
 const schema: joi.SchemaLike = joi.object().keys({
     email: joi.string().required(),

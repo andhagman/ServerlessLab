@@ -24,6 +24,7 @@ export const handler = lambdaHttpHandler(async (event) => {
 });
 
 export const register = async (email: string, password: string): Promise<AWS.CognitoIdentityServiceProvider.SignUpResponse> => {
+
     const params: AWS.CognitoIdentityServiceProvider.SignUpRequest = {
         ClientId: process.env.UserPoolClientId,
         Password: password,
