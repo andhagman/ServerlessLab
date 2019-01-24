@@ -1,1 +1,2 @@
-I have nothing to say.. right now
+A simple example serverless application with API GW Cognito Authentication.
+
