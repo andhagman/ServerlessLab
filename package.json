@@ -1,7 +1,7 @@
 {
   "name": "serverlesslab",
   "version": "1.0.0",
-  "description": "A simple serverless demo application",
+  "description": "A simple serverless demo application with AWS Cognito",
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -1,0 +1,136 @@
+{
+	"id": "b59c10f0-a1e5-425b-b5eb-83da6be56645",
+	"name": "Serverless lab",
+	"description": "",
+	"auth": null,
+	"events": null,
+	"variables": [],
+	"order": [
+		"87d88bd6-e442-466f-913f-ea24839107af",
+		"ef3de281-3218-49dd-b2e0-b43fbee0f3dc",
+		"937eb8b1-4be4-4db7-a323-15b7dbc4e484",
+		"ea49290b-e9ce-4dc7-a580-9fece6c52bc0"
+	],
+	"folders_order": [],
+	"folders": [],
+	"requests": [
+		{
+			"id": "87d88bd6-e442-466f-913f-ea24839107af",
+			"name": "Register",
+			"url": "https://wo274hj3ff.execute-api.eu-west-1.amazonaws.com/dev/register",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"name": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"type": "text"
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "{\n\t\"password\": \"Tatiana321!\",\n\t\"email\": \"andreas.hagman@enfogroup.com\"\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "937eb8b1-4be4-4db7-a323-15b7dbc4e484",
+			"name": "Auth",
+			"url": "https://wo274hj3ff.execute-api.eu-west-1.amazonaws.com/dev/auth",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"description": "",
+					"key": "Content-Type",
+					"name": "Content-Type",
+					"type": "text",
+					"value": "application/json"
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e37e4fe9-e840-4809-8a5d-4a17d758f906",
+						"exec": [
+							"var responseObj = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"id_token\", responseObj.IdToken);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"folder": null,
+			"rawModeData": "{\n\t\"email\": \"andreas.hagman@enfogroup.com\",\n\t\"password\": \"Andreas123!\"\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "ea49290b-e9ce-4dc7-a580-9fece6c52bc0",
+			"name": "Get - Test",
+			"url": "https://ijjvk9voq2.execute-api.eu-west-1.amazonaws.com/dev/test",
+			"description": "",
+			"data": null,
+			"dataMode": null,
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "{{id_token}}",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": {
+				"type": "noauth",
+				"noauth": []
+			},
+			"events": [],
+			"folder": null,
+			"headers": "Authorization: {{id_token}}\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "ef3de281-3218-49dd-b2e0-b43fbee0f3dc",
+			"name": "Confirm",
+			"url": "https://yzqmlc4f0k.execute-api.eu-west-1.amazonaws.com/dev/verify",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"description": "",
+					"key": "Content-Type",
+					"name": "Content-Type",
+					"type": "text",
+					"value": "application/json"
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "{\n\t\"username\": \"hagge\",\n\t\"confirmationCode\": \"623670\"\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		}
+	]
+}

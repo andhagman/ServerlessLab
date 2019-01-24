@@ -8,8 +8,8 @@ provider:
   package:
     individually: true
   environment:
-    UserPoolId: eu-west-1_hkR3jTqeE
-    UserPoolClientId: 52k13bc0ini6ksl79n0qpeabb0
+    UserPoolId: eu-west-1_ZSweB3Dka
+    UserPoolClientId: 55ms3jbn6403vovef2veo3n2lo
   iamRoleStatements:
     - Effect: Allow
       Action: 
@@ -27,20 +27,20 @@ functions:
       - http:
           method: GET
           path: test
-          # authorizer: 
-          #    type: COGNITO_USER_POOLS
-          #    authorizerId: 
-          #      Ref: ApiGatewayAuthorizer
+          authorizer: 
+             type: COGNITO_USER_POOLS
+             authorizerId: 
+               Ref: ApiGatewayAuthorizer
   post-test:
     handler: src/lambdas/http/post-test.handler
     events:
       - http:
           method: POST
           path: test
-          # authorizer: 
-          #    type: COGNITO_USER_POOLS
-          #    authorizerId: 
-          #      Ref: ApiGatewayAuthorizer
+          authorizer: 
+             type: COGNITO_USER_POOLS
+             authorizerId: 
+               Ref: ApiGatewayAuthorizer
   register:
     handler: src/lambdas/http/autherizer/register.handler
     events:
@@ -79,17 +79,11 @@ resources:
           - Fn::GetAtt:
               - CognitoUserPoolServerlessLab
               - Arn
-
     CognitoUserPoolServerlessLab:
       Type: AWS::Cognito::UserPool
       Properties:
         UserPoolName: UserPool
-        # UsernameAttributes: [ email ]
-        # AutoVerifiedAttributes:
-        #   - email
         MfaConfiguration: "OFF"
-        # EmailVerificationSubject: "Your Serverless Lab verification code"
-        # EmailVerificationMessage: "Your Serverless Lab  verification code is {####}."
         Schema:
           - Name: email
             AttributeDataType: String
@@ -108,7 +102,6 @@ resources:
             EmailSubject: "Your temporary Serverless Lab  password"
           UnusedAccountValidityDays: 7
           AllowAdminCreateUserOnly: false
-
     UserPoolClient:
       Type: AWS::Cognito::UserPoolClient
       Properties:
