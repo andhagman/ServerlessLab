@@ -1,16 +1,11 @@
 import { lambdaHttpHandler } from '../../utils/lambda-utils/LambdaHttp';
-import { ITest } from '../../models/Test';
+import { getTestValue } from 'testModule';
 
 export const handler = lambdaHttpHandler(async (event) => {
-  const test: ITest = {
-    TestBool: true,
-    TestNumber: 1,
-    TestString: "string"
-  }
-
+  const testValue = getTestValue();
 
   return {
     statusCode: 200,
-    response: "Ok"
+    response: testValue
   }
 });
