@@ -1,8 +1,12 @@
 import { lambdaHttpHandler } from '../../utils/lambda-utils/LambdaHttp';
-import { getTestValue } from 'testModule';
+import { ITestInterface } from 'testInterface';
 
 export const handler = lambdaHttpHandler(async (event) => {
-  const testValue = getTestValue();
+  const testValue: ITestInterface = {
+    age: 10,
+    name: 'Andreas',
+    isMarried: false
+  }
 
   return {
     statusCode: 200,
