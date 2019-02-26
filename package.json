@@ -4,7 +4,8 @@
   "description": "A simple serverless demo application with AWS Cognito",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "merge": "yaml-into-yaml --base-file templates/template.yml --mixin-file templates/swagger.yml --selector resources.Resources.ApiGatewayRestApi.Properties.Body --output-file serverless.yml"
   },
   "repository": {
     "type": "git",
@@ -27,7 +28,8 @@
     "node-fetch": "^2.3.0",
     "path": "^0.12.7",
     "serverless-offline": "^3.31.3",
-    "ts-loader": "^5.3.1"
+    "ts-loader": "^5.3.1",
+    "yaml-into-yaml": "0.0.6"
   },
   "devDependencies": {
     "serverless-webpack": "^5.2.0",

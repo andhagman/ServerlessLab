@@ -1,5 +1,4 @@
 service: andreas-hagman-serverlesslab
-
 provider:
   name: aws
   runtime: nodejs8.10
@@ -12,41 +11,31 @@ provider:
     UserPoolClientId: 55ms3jbn6403vovef2veo3n2lo
   iamRoleStatements:
     - Effect: Allow
-      Action: 
-        - cognito-idp:*
-      Resource: "*"
-
+      Action:
+        - 'cognito-idp:*'
+      Resource: '*'
 plugins:
   - serverless-webpack
   - serverless-offline
-
-
 layers:
- commonLayer:
-   path: layers/common
-   description: This lambda layer takes care of common
-
+  commonLayer:
+    path: layers/common
+    description: This lambda layer takes care of common
 functions:
-  get-test:
+  GetTest:
     handler: src/lambdas/http/get-test.handler
     events:
       - http:
           method: GET
           path: test
     layers:
-      - { Ref: CommonLayerLambdaLayer }
-    
-
-  post-test:
+      - Ref: CommonLayerLambdaLayer
+  PostTest:
     handler: src/lambdas/http/post-test.handler
     events:
       - http:
           method: POST
           path: test
-          authorizer: 
-             type: COGNITO_USER_POOLS
-             authorizerId: 
-               Ref: ApiGatewayAuthorizer
   register:
     handler: src/lambdas/http/autherizer/register.handler
     events:
@@ -71,26 +60,25 @@ functions:
       - cognitoUserPool:
           pool: ServerlessLab
           trigger: PreSignUp
-
 resources:
   Resources:
-    ApiGatewayAuthorizer: 
-      Type: AWS::ApiGateway::Authorizer
-      Properties: 
+    ApiGatewayAuthorizer:
+      Type: 'AWS::ApiGateway::Authorizer'
+      Properties:
         Name: ApiGatewayAuthorizer
         Type: COGNITO_USER_POOLS
         IdentitySource: method.request.header.Authorization
-        RestApiId: 
+        RestApiId:
           Ref: ApiGatewayRestApi
-        ProviderARNs: 
-          - Fn::GetAtt:
+        ProviderARNs:
+          - 'Fn::GetAtt':
               - CognitoUserPoolServerlessLab
               - Arn
     CognitoUserPoolServerlessLab:
-      Type: AWS::Cognito::UserPool
+      Type: 'AWS::Cognito::UserPool'
       Properties:
         UserPoolName: UserPool
-        MfaConfiguration: "OFF"
+        MfaConfiguration: 'OFF'
         Schema:
           - Name: email
             AttributeDataType: String
@@ -105,12 +93,14 @@ resources:
             RequireUppercase: true
         AdminCreateUserConfig:
           InviteMessageTemplate:
-            EmailMessage: "Your Serverless Lab  username is {username} and temporary password is {####}."
-            EmailSubject: "Your temporary Serverless Lab  password"
+            EmailMessage: >-
+              Your Serverless Lab  username is {username} and temporary password
+              is {####}.
+            EmailSubject: Your temporary Serverless Lab  password
           UnusedAccountValidityDays: 7
           AllowAdminCreateUserOnly: false
     UserPoolClient:
-      Type: AWS::Cognito::UserPoolClient
+      Type: 'AWS::Cognito::UserPoolClient'
       Properties:
         ClientName: UserPoolClient
         UserPoolId:
@@ -120,13 +110,14 @@ resources:
         GenerateSecret: false
         RefreshTokenValidity: 7
 
+    ApiGatewayRestApi:
+      Properties:
+        Body: ${file(templates/swagger.yml)}
+
 Outputs:
   UserPoolId:
     Value:
       Ref: CognitoUserPoolServerlessLab
-
   UserPoolClientId:
     Value:
       Ref: UserPoolClient
-
-
