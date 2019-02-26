@@ -22,7 +22,7 @@ paths:
         type: aws_proxy
         uri:
           'Fn::Sub': >-
-            arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-1:122517921916:function:andreas-hagman-serverlesslab-dev-GetTest/invocations
+            arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-1:122517921916:function:andreas-hagman-serverlesslab-${self:provider.stage}-GetTest/invocations
       responses:
         '200':
           description: ''
@@ -39,7 +39,7 @@ paths:
         type: aws_proxy
         uri:
           'Fn::Sub': >-
-            arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-1:122517921916:function:andreas-hagman-serverlesslab-dev-PostTest/invocations
+            arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-1:122517921916:function:andreas-hagman-serverlesslab-${self:provider.stage}-PostTest/invocations
       responses:
         '200':
           description: ''

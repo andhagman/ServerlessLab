@@ -3,7 +3,7 @@ provider:
   name: aws
   runtime: nodejs8.10
   region: eu-west-1
-  stage: dev
+  stage: ${opt:stage, 'dev'}
   package:
     individually: true
   environment:
